@@ -14,7 +14,10 @@
         "sizes": "512x512",
         "type": "image/png"
     }],
+    "id": "./notas",
+    "scope": "./",
     "start_url": "./",
+    "description": "Crie notas de lembrete",
     "background_color": "#59f",
     "theme_color": "#59f",
     "display": "standalone"
