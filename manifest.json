@@ -1,5 +1,5 @@
 {
-    "name": "Notas",
+    "name": "Notas - Gerenciador de Notas de Lembrete",
     "short_name": "Notas",
     "icons": [{
         "src": "./res/notas.png",
