@@ -9,11 +9,12 @@
         "src": "./res/notas192.png",
         "sizes": "192x192",
         "type": "image/png",
-        "purpose": "any maskable"
+        "purpose": "maskable"
     },{
         "src": "./res/notas256.png",
         "sizes": "256x256",
         "type": "image/png"
+        "purpose": "maskable"
     },{
         "src": "./res/notas512.png",
         "sizes": "512x512",
