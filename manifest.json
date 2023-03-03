@@ -26,6 +26,7 @@
     "description": "Crie notas de lembrete",
     "background_color": "#59f",
     "theme_color": "#59f",
+    "display": "standalone",
     "lang": "pt",
     "dir": "ltr",
     "orientation": "any",
