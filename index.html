@@ -1,0 +1,220 @@
+<html lang="pt-br" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
+                <meta name="theme-color" content="#333"/>
+                <meta name="Description" content="
+                    Desenvolvido por: Rafael Prates Quevedo
+                    Data: 2023-03-02
+                ">
+                <link rel="manifest" href="manifest.json">
+                <link rel="icon" href="res/notas.png" />
+                <link rel="icon" href="res/notas.ico" />
+        <style>
+            body {
+                background-color: #333;
+                color: #eee;
+                margin: 0;
+                font-family: Open Sans;
+            }
+
+            form {
+                display: flex;
+                flex-direction: column;
+
+            }
+
+            form input {
+                display: block;
+                margin-bottom: 15px;
+            }
+
+            form button {
+                background-color: #33f;
+                color: #fff;
+                border-radius: 5px;
+                height: 24px;
+                width: 120px;
+            }
+
+            table {
+                border-collapse: collapse;
+                width:100%;
+            }
+
+            th:nth-child(1) {
+                width: 22px !important;
+            }
+
+            th {
+                background-color: #59f;
+                border: 2px groove rgba(225,225,255,0.7);
+            }
+
+
+            thead {
+                border: 1px none transparent;
+            }
+            tbody {
+                border: 1px solid;
+            }
+
+            td {
+                border: 1px dotted;
+            }
+
+            td:last-child {
+                text-align: right;
+            }
+
+            td[colspan='4'] {
+                text-align: center;
+            }
+
+            td, th {
+                padding: 5px;
+            }
+
+            header {
+                background-color: #59f;
+                color: #eee;
+                height: 40px;
+                line-height: 40px;
+                display: flex;
+                align-items: center;
+                justify-content: end;
+                padding: 0 10px;
+            }
+
+            dialog {
+                border: 1px solid #333;
+            }
+
+            dialog::backdrop {
+                backdrop-filter: blur(5px);
+            }
+       </style>
+    </head>
+    <body>
+        <header>
+            <button>Adicionar</button>
+        </header>
+        <table>
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>ID</th>
+                    <th>Nota</th>
+                    <th>Data</th>
+                </tr>
+            </thead>
+        </table>
+        <dialog>
+            <form method="post" autocomplete="off">
+                <label for="desc">Descrição</label>
+                <input type="text" required name="desc" id="desc">
+                <label for="data">Data</label>
+                <input type="number" required name="data" id="data">
+                <button>Gravar</button>
+            </form>
+        </dialog>
+    </body>
+    <script>
+        class Nota {
+            constructor ({id, desc, data, checked = false}) {
+                this.id = id
+                this.desc = desc
+                this.data = data
+                this.checked = checked
+            }
+        }
+
+        function inserir (nota) {
+            var notas = JSON.parse (localStorage.getItem ("notas")) ?? [];
+            notas.push (nota);
+            localStorage.setItem ("notas", JSON.stringify (notas));
+        }
+
+        function lerDados () {
+            return JSON.parse (localStorage.getItem ("notas")) ?? null;
+        }
+
+
+        function exibirDados () {
+            let nodes = document.querySelector ('table').children;
+            for (node of nodes) {
+                if (node.tagName === 'TBODY') {
+                    node.remove ();
+                }
+            }
+
+            let dados = lerDados ();
+            let tbody = document.createElement ('tbody');
+
+            if (dados === null) {
+                let tr = document.createElement ('tr');
+                let td = document.createElement ('td');
+                td.setAttribute ('colspan','4');
+                td.innerHTML = 'Sem dados armazenados';
+                tr.appendChild (td);
+                tbody.appendChild (tr);
+                document.querySelector ('table').appendChild (tbody);
+                return ;
+            }
+
+            dados.forEach ( nota => {
+                let tr = document.createElement ('tr');
+                let cb = document.createElement ('td');
+                let id = document.createElement ('td');
+                let desc = document.createElement ('td');
+                let data = document.createElement ('td');
+
+                cb.innerHTML = '<input type="checkbox" '+ (nota.checked ? 'checked' : '') +' id="'+nota.id+'">'
+                id.innerHTML = nota.id
+                desc.innerHTML = nota.desc
+                data.innerHTML = nota.data.padStart(2,'0')
+
+                tbody.appendChild (tr);
+                tr.appendChild (cb)
+                tr.appendChild (id)
+                tr.appendChild (desc)
+                tr.appendChild (data)
+            })
+            document.querySelector ('table').appendChild (tbody);
+        }
+
+        exibirDados ();
+
+        document.querySelector ('header button').addEventListener ('click', () => {
+            document.querySelector ('dialog').showModal ();
+        })
+
+        document.querySelector ("form").addEventListener ("submit", (e) => {
+            e.preventDefault ();
+            let nota = new Nota ({
+                id : (Math.round (new Date () /1)).toString (16),
+                desc : document.querySelector ('#desc').value,
+                data : document.querySelector ('#data').value,
+            })
+
+            //console.log (nota)
+            inserir (nota);
+            document.querySelector ("form").reset ();
+            exibirDados ();
+            document.querySelector ('dialog').close ()
+        })
+
+        document.addEventListener('visibilitychange', function() {
+            if (document.visibilityState == 'hidden') {
+                let notas = lerDados ();
+                let boxes = document.querySelectorAll ('input[type="checkbox"]');
+                boxes.forEach ((box, i) => {
+                    notas[i].checked = box.checked;
+                })
+                localStorage.clear ()
+                localStorage.setItem ("notas", JSON.stringify(notas))
+            }
+        });
+
+    </script>
+</html>
