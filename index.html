@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="pt-br" dir="ltr">
+<html lang="pt-br">
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=0">
@@ -22,7 +22,7 @@
             form {
                 display: flex;
                 flex-direction: column;
-
+                margin: 10px;
             }
 
             form input {
@@ -34,7 +34,7 @@
                 background-color: #33f;
                 color: #fff;
                 border-radius: 5px;
-                height: 24px;
+                height: 30px;
                 width: 120px;
             }
 
@@ -89,6 +89,18 @@
 
             dialog {
                 border: 1px solid #333;
+                padding: 0;
+                border-radius: 7px;
+                box-shadow: 7px 7px 7px rgba(0,0,0,0.7);
+            }
+
+            dialog header button {
+                background-color: #f00;
+                color: #fff;
+                border-radius: 5px;
+                height: 30px;
+                width: 30px;
+                font-weight: bold;
             }
 
             dialog::backdrop {
@@ -111,6 +123,7 @@
             </thead>
         </table>
         <dialog>
+            <header><button>×</button></header>
             <form method="post" autocomplete="off">
                 <label for="desc">Descrição</label>
                 <input type="text" required name="desc" id="desc">
@@ -217,5 +230,9 @@
             }
         });
 
+        document.querySelector ('dialog header button').addEventListener ('click', () => {
+            document.querySelector ("form").reset ();
+            document.querySelector ('dialog').close ();
+        })
     </script>
 </html>
