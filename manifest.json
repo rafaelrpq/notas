@@ -6,6 +6,11 @@
         "sizes": "128x128",
         "type": "image/png"
     },{
+        "src": "./res/notas192.png",
+        "sizes": "192x192",
+        "type": "image/png",
+        "purpose": "any maskable"
+    },{
         "src": "./res/notas256.png",
         "sizes": "256x256",
         "type": "image/png"
