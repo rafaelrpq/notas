@@ -51,7 +51,7 @@ function exibirDados () {
 
         cb.innerHTML = '<input type="checkbox" '+ (nota.checked ? 'checked' : '') +' id="'+nota.id+'">'
         id.innerHTML = nota.id
-        desc.innerHTML = nota.desc
+        desc.innerHTML = '<label for="'+nota.id+'">'+nota.desc+'</label>'
         data.innerHTML = nota.data.padStart(2,'0')
 
         tbody.appendChild (tr);
@@ -79,9 +79,11 @@ document.querySelector ("form").addEventListener ("submit", (e) => {
 
     //console.log (nota)
     inserir (nota);
-    document.querySelector ("form").reset ();
-    exibirDados ();
-    document.querySelector ('dialog').close ()
+
+    location.reload ();
+    // document.querySelector ("form").reset ();
+    // exibirDados ();
+    // document.querySelector ('dialog').close ()
 })
 
 document.addEventListener('visibilitychange', function() {

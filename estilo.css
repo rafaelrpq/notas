@@ -41,6 +41,7 @@ th:nth-child(1) {
 th {
     background-color: #59f;
     border: 1px solid #fff;
+    text-shadow: 0 0 1px #000;
 }
 
 
@@ -82,8 +83,8 @@ header {
 header button {
     height: 40px;
     border-radius: 7px;
-    color: #fff;
-    background-color: #a9f;
+    color: #333;
+    background-color: #eee;
     font-weight: bold;
     border: 2px outset rgba(255,255,255,0.7);
 }
