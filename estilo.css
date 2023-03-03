@@ -1,0 +1,115 @@
+body {
+    background-color: #333;
+    color: #eee;
+    margin: 0px;
+    height: 100vh;
+    font-family: Open Sans;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+}
+
+form input {
+    display: block;
+    margin-bottom: 15px;
+    height: 24px;
+}
+
+form button {
+    background-color: #33f;
+    color: #fff;
+    border-radius: 5px;
+    height: 40px;
+    width: 120px;
+}
+
+table {
+    border-collapse: collapse;
+    width: calc(100% - 20px);
+    margin-left: 10px;
+    margin-right: 10px;
+    margin-top: 10px;
+}
+
+th:nth-child(1) {
+    width: 22px !important;
+}
+
+th {
+    background-color: #59f;
+    border: 2px outset rgba(225,225,255,0.7);
+}
+
+
+thead {
+    border: 1px none transparent;
+}
+tbody {
+    border: 1px solid;
+}
+
+td {
+    border: 1px dotted;
+}
+
+td:last-child {
+    text-align: right;
+}
+
+td[colspan='4'] {
+    text-align: center;
+}
+
+td, th {
+    padding: 5px;
+}
+
+header {
+    background-color: #59f;
+    color: #eee;
+    height: 60px;
+    line-height: 60px;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+    padding: 0 10px;
+}
+
+header button {
+    height: 40px;
+    border-radius: 7px;
+    color: #fff;
+    background-color: #a9f;
+    font-weight: bold;
+    border: 2px outset rgba(255,255,255,0.7);
+}
+
+header button:active {
+    border: 2px inset rgba(255,255,255,0.7);
+}
+
+dialog {
+    border: 1px solid #333;
+    padding: 0;
+    border-radius: 7px;
+    box-shadow: 7px 7px 7px rgba(0,0,0,0.7);
+}
+
+dialog header {
+    height: 40px;
+}
+dialog header button {
+    background-color: #f00;
+    color: #fff;
+    border-radius: 5px;
+    height: 30px;
+    width: 30px;
+    font-weight: bold;
+}
+
+dialog::backdrop {
+    backdrop-filter: blur(5px);
+}
