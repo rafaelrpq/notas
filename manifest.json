@@ -13,8 +13,8 @@
     },{
         "src": "./res/notas256.png",
         "sizes": "256x256",
-        "type": "image/png"
-        "purpose": "maskable"
+        "type": "image/png",
+        "purpose": "any"
     },{
         "src": "./res/notas512.png",
         "sizes": "512x512",
