@@ -47,6 +47,8 @@ function exibirDados () {
         let desc = document.createElement ('td');
         let data = document.createElement ('td');
 
+        nota.checked ? tr.classList.add ('checked') : '';
+
         cb.innerHTML = '<input type="checkbox" '+ (nota.checked ? 'checked' : '') +' id="'+nota.id+'">'
         id.innerHTML = nota.id
         desc.innerHTML = nota.desc
@@ -97,4 +99,17 @@ document.addEventListener('visibilitychange', function() {
 document.querySelector ('dialog header button').addEventListener ('click', () => {
     document.querySelector ("form").reset ();
     document.querySelector ('dialog').close ();
+})
+
+boxes = document.querySelectorAll ('input[type="checkbox"]')
+tr = document.querySelectorAll ('tbody tr')
+
+boxes.forEach ( (box, i) => {
+    box.addEventListener ('change', () => {
+        if (box.checked) {
+            tr[i].classList.add ('checked');
+        } else {
+            tr[i].classList.remove ('checked');
+        }
+    })
 })

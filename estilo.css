@@ -40,13 +40,14 @@ th:nth-child(1) {
 
 th {
     background-color: #59f;
-    border: 2px outset rgba(225,225,255,0.7);
+    border: 1px solid #fff;
 }
 
 
 thead {
     border: 1px none transparent;
 }
+
 tbody {
     border: 1px solid;
 }
@@ -112,4 +113,9 @@ dialog header button {
 
 dialog::backdrop {
     backdrop-filter: blur(5px);
+}
+
+.checked {
+    text-decoration: line-through;
+    font-style: italic;
 }
