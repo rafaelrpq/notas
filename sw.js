@@ -25,3 +25,11 @@ self.addEventListener ('fetch', (event) => {
         .then (cacheResponse => (cacheResponse || fetch (event).request))
     )
 })
+
+self.addEventListener ('push', (event) => {
+    let notification = event.data.text ()
+    console.log (event.data.text())
+    self.registration.showNotification (
+        notification
+    )
+})
