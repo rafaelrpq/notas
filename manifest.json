@@ -31,7 +31,8 @@
     "dir": "ltr",
     "orientation": "any",
     "display_override": [
-        "standalone"
+        "standalone",
+        "fullscreen"
     ],
     "categories": [
         "utilities"
