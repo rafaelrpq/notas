@@ -28,8 +28,13 @@ self.addEventListener ('fetch', (event) => {
 
 self.addEventListener ('push', (event) => {
     let notification = event.data.text ()
-    console.log (event.data.text())
+    console.log (event.data)
     self.registration.showNotification (
-        notification
+        'Atenção'
+        ,{
+            "body" : notification,
+            "icon" : "res/notas.png"
+
+        }
     )
 })
