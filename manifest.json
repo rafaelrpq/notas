@@ -26,13 +26,12 @@
     "description": "Crie notas de lembrete",
     "background_color": "#59f",
     "theme_color": "#59f",
-    "display": "standalone",
+    "display": "fullscreen",
     "lang": "pt",
     "dir": "ltr",
     "orientation": "any",
     "display_override": [
         "standalone",
-        "fullscreen"
     ],
     "categories": [
         "utilities"

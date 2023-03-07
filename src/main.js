@@ -32,7 +32,7 @@ function exibirDados () {
     if (dados === null) {
         let tr = document.createElement ('tr');
         let td = document.createElement ('td');
-        td.setAttribute ('colspan','4');
+        td.setAttribute ('colspan','3');
         td.innerHTML = 'Sem dados armazenados';
         tr.appendChild (td);
         tbody.appendChild (tr);
@@ -43,20 +43,20 @@ function exibirDados () {
     dados.forEach ( nota => {
         let tr = document.createElement ('tr');
         let cb = document.createElement ('td');
-        let id = document.createElement ('td');
+        // let id = document.createElement ('td');
         let desc = document.createElement ('td');
         let data = document.createElement ('td');
 
         nota.checked ? tr.classList.add ('checked') : '';
 
         cb.innerHTML = '<input type="checkbox" '+ (nota.checked ? 'checked' : '') +' id="'+nota.id+'">'
-        id.innerHTML = nota.id
+        // id.innerHTML = nota.id
         desc.innerHTML = '<label for="'+nota.id+'">'+nota.desc+'</label>'
         data.innerHTML = nota.data.padStart(2,'0')
 
         tbody.appendChild (tr);
         tr.appendChild (cb)
-        tr.appendChild (id)
+        // tr.appendChild (id)
         tr.appendChild (desc)
         tr.appendChild (data)
     })

@@ -59,9 +59,10 @@ td {
 
 td:last-child {
     text-align: right;
+    width: 2rem;
 }
 
-td[colspan='4'] {
+td[colspan] {
     text-align: center;
 }
 
