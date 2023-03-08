@@ -18,7 +18,7 @@ function atualizar (id, nota) {
 function lerDados () {
     let dados = {};
     let registros = localStorage.length;
-    if (registros === 0) return null;
+    if (registros === 0) { return null }
     for (let i = 0; i < registros; i++) {
         let obj = JSON.parse (localStorage.getItem (localStorage.key(i)))
         dados[localStorage.key(i)] = new Nota ({
