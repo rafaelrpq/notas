@@ -1,6 +1,5 @@
 class Nota {
-    constructor ({id, desc, data, checked = false}) {
-        this.id = id
+    constructor ({desc, data, checked = false}) {
         this.desc = desc
         this.data = data
         this.checked = checked
@@ -8,14 +7,23 @@ class Nota {
 }
 
 function inserir (nota) {
-    var notas = JSON.parse (localStorage.getItem ("notas")) ?? [];
-    notas.push (nota);
-    localStorage.setItem ("notas", JSON.stringify (notas));
+    let id = (new Date() / 1).toString (16)
+    localStorage.setItem (id, JSON.stringify (nota))
 }
 
 function lerDados () {
-    return JSON.parse (localStorage.getItem ("notas")) ?? null;
+    let dados = {};
+    for (let i = 0; i < localStorage.length; i++) {
+        let obj = JSON.parse (localStorage.getItem (localStorage.key(i)))
+        dados[localStorage.key(i)] = new Nota ({
+            desc : obj.desc,
+            data : obj.data,
+            checked : obj.checked
+        })
+    }
+    return  (Object.keys(dados).length > 0) ? dados : null;
 }
+
 
 
 function exibirDados () {
@@ -26,40 +34,33 @@ function exibirDados () {
         }
     }
 
-    let dados = lerDados ();
+    let notas = lerDados ();
     let tbody = document.createElement ('tbody');
 
-    if (dados === null) {
-        let tr = document.createElement ('tr');
-        let td = document.createElement ('td');
-        td.setAttribute ('colspan','3');
-        td.innerHTML = 'Sem dados armazenados';
-        tr.appendChild (td);
-        tbody.appendChild (tr);
-        document.querySelector ('table').appendChild (tbody);
-        return ;
+    if (notas === null) {
+        document.querySelector ('table').style.display = 'none';
+        document.body.innerHTML += "<center>Sem dados registrados</center>"
     }
 
-    dados.forEach ( nota => {
+    for (i in notas) {
         let tr = document.createElement ('tr');
         let cb = document.createElement ('td');
-        // let id = document.createElement ('td');
         let desc = document.createElement ('td');
         let data = document.createElement ('td');
+        let act = document.createElement ('td');
 
-        nota.checked ? tr.classList.add ('checked') : '';
+        notas[i].checked ? tr.classList.add ('checked') : '';
 
-        cb.innerHTML = '<input type="checkbox" '+ (nota.checked ? 'checked' : '') +' id="'+nota.id+'">'
-        // id.innerHTML = nota.id
-        desc.innerHTML = '<label for="'+nota.id+'">'+nota.desc+'</label>'
-        data.innerHTML = nota.data.padStart(2,'0')
-
+        cb.innerHTML = '<input type="checkbox" '+ (notas[i].checked ? 'checked' : '') +' id="'+i+'">'
+        desc.innerHTML = '<label for="'+i+'">'+notas[i].desc+'</label>'
+        data.innerHTML = notas[i].data.padStart(2,'0')
+        act.innerHTML = `<a del id="btn${i}" href="#" title="remover">Remover</i></a>`
         tbody.appendChild (tr);
         tr.appendChild (cb)
-        // tr.appendChild (id)
         tr.appendChild (desc)
         tr.appendChild (data)
-    })
+        tr.appendChild (act)
+    }
     document.querySelector ('table').appendChild (tbody);
 }
 
@@ -72,7 +73,6 @@ document.querySelector ('header button').addEventListener ('click', () => {
 document.querySelector ("form").addEventListener ("submit", (e) => {
     e.preventDefault ();
     let nota = new Nota ({
-        id : (Math.round (new Date () /1)).toString (16),
         desc : document.querySelector ('#desc').value,
         data : document.querySelector ('#data').value,
     })
@@ -80,23 +80,23 @@ document.querySelector ("form").addEventListener ("submit", (e) => {
     //console.log (nota)
     inserir (nota);
 
-    location.reload ();
+    location.href = './';
     // document.querySelector ("form").reset ();
     // exibirDados ();
     // document.querySelector ('dialog').close ()
 })
 
-document.addEventListener('visibilitychange', function() {
-    if (document.visibilityState == 'hidden') {
-        let notas = lerDados ();
-        let boxes = document.querySelectorAll ('input[type="checkbox"]');
-        boxes.forEach ((box, i) => {
-            notas[i].checked = box.checked;
-        })
-        localStorage.clear ()
-        localStorage.setItem ("notas", JSON.stringify(notas))
-    }
-});
+// document.addEventListener('visibilitychange', function() {
+//     if (document.visibilityState == 'hidden') {
+//         let notas = lerDados ();
+//         let boxes = document.querySelectorAll ('input[type="checkbox"]');
+//         boxes.forEach ((box, i) => {
+//             notas[i].checked = box.checked;
+//         })
+//         // localStorage.clear ()
+//         // localStorage.setItem ("notas", JSON.stringify(notas))
+//     }
+// });
 
 document.querySelector ('dialog header button').addEventListener ('click', () => {
     document.querySelector ("form").reset ();
@@ -113,6 +113,15 @@ boxes.forEach ( (box, i) => {
         } else {
             tr[i].classList.remove ('checked');
         }
+    })
+})
+
+links = document.querySelectorAll ('a[del]');
+links.forEach (a => {
+    a.addEventListener ('click', e => {
+        e.preventDefault();
+        localStorage.removeItem ((a.getAttribute('id')).substring(3))
+        location.href = './'
     })
 })
 

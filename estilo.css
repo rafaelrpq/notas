@@ -6,6 +6,16 @@ body {
     font-family: Open Sans;
 }
 
+a {
+    color: #eee;
+    text-decoration: none;
+}
+
+a:hover {
+    color: #f55;
+    text-decoration: underline;
+}
+
 form {
     display: flex;
     flex-direction: column;
@@ -57,7 +67,7 @@ td {
     border: 1px dotted;
 }
 
-th:last-child {
+td:nth-child(3), td:nth-child(4) {
     text-align: right;
     width: 2rem;
 }
