@@ -39,10 +39,11 @@
         <dialog>
             <header><button>×</button></header>
             <form method="post" autocomplete="off">
+                <input type="hidden" id="id" name="id">
                 <label for="desc">Descrição</label>
                 <input type="text" required name="desc" id="desc">
                 <label for="data">Data</label>
-                <input type="number" required name="data" id="data">
+                <input type="date" required name="data" id="data">
                 <button>Gravar</button>
             </form>
         </dialog>

@@ -69,7 +69,12 @@ td {
 
 td:nth-child(3), td:nth-child(4) {
     text-align: right;
-    width: 2rem;
+}
+th:nth-child(3) {
+    width: 10rem;
+}
+th:nth-child(4) {
+    width: 5rem;
 }
 
 td[colspan] {

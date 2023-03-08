@@ -11,6 +11,10 @@ function inserir (nota) {
     localStorage.setItem (id, JSON.stringify (nota))
 }
 
+function atualizar (id, nota) {
+    localStorage.setItem (id, JSON.stringify (nota))
+}
+
 function lerDados () {
     let dados = {};
     for (let i = 0; i < localStorage.length; i++) {
@@ -35,6 +39,7 @@ function exibirDados () {
     }
 
     let notas = lerDados ();
+    Object.keys (notas).sort()
     let tbody = document.createElement ('tbody');
 
     if (notas === null) {
@@ -54,7 +59,7 @@ function exibirDados () {
         cb.innerHTML = '<input type="checkbox" '+ (notas[i].checked ? 'checked' : '') +' id="'+i+'">'
         desc.innerHTML = '<label for="'+i+'">'+notas[i].desc+'</label>'
         data.innerHTML = notas[i].data.padStart(2,'0')
-        act.innerHTML = `<a del id="btn${i}" href="#" title="remover">Remover</i></a>`
+        act.innerHTML = `<a del id="del${i}" href="#remover" title="remover">del</a> | <a edit id="edit${i}" href="#editar" title="editar">edit</a>`
         tbody.appendChild (tr);
         tr.appendChild (cb)
         tr.appendChild (desc)
@@ -77,10 +82,15 @@ document.querySelector ("form").addEventListener ("submit", (e) => {
         data : document.querySelector ('#data').value,
     })
 
-    //console.log (nota)
-    inserir (nota);
+    if (document.querySelector ('#id').value !== '' ) {
+        atualizar (document.querySelector ('#id').value, nota)
+        location.href = './'
+    } else {
+        inserir (nota);
+        location.href = './';
+    }
 
-    location.href = './';
+    //console.log (nota)
     // document.querySelector ("form").reset ();
     // exibirDados ();
     // document.querySelector ('dialog').close ()
@@ -103,62 +113,71 @@ document.querySelector ('dialog header button').addEventListener ('click', () =>
     document.querySelector ('dialog').close ();
 })
 
-boxes = document.querySelectorAll ('input[type="checkbox"]')
-tr = document.querySelectorAll ('tbody tr')
+let boxes = document.querySelectorAll ('input[type="checkbox"]')
+let tr = document.querySelectorAll ('tbody tr')
 
 boxes.forEach ( (box, i) => {
     box.addEventListener ('change', () => {
+        let nota = JSON.parse ( localStorage.getItem ( box.getAttribute ('id') ) )
+        console.log (box.getAttribute ('id'))
         if (box.checked) {
             tr[i].classList.add ('checked');
         } else {
             tr[i].classList.remove ('checked');
         }
+        nota.checked = box.checked
+        atualizar (box.getAttribute ('id'), nota)
     })
 })
 
-links = document.querySelectorAll ('a[del]');
-links.forEach (a => {
+var rem = document.querySelectorAll ('a[del]');
+rem.forEach (a => {
+    let nota = JSON.parse (localStorage.getItem ((a.getAttribute('id')).substring(3)))
     a.addEventListener ('click', e => {
         e.preventDefault();
-        localStorage.removeItem ((a.getAttribute('id')).substring(3))
-        location.href = './'
+        if (confirm (`Deseja remover a nota "${nota.desc}"`)) {
+            localStorage.removeItem ((a.getAttribute('id')).substring(3))
+            location.href = './'
+        }
     })
 })
 
+var edit = document.querySelectorAll ('a[edit]');
+edit.forEach (a => {
+    let nota = JSON.parse (localStorage.getItem ((a.getAttribute('id')).substring(4)))
+    a.addEventListener ('click', e => {
+        e.preventDefault();
+        document.querySelector ('#id').value = (a.getAttribute('id')).substring(4)
+        document.querySelector ('#desc').value = nota.desc
+        document.querySelector ('#data').value = nota.data
+        document.querySelector ('dialog').showModal ();
+    })
+})
+
+let register = null
 if ('serviceWorker' in navigator) {
     window.addEventListener ('load', () => {
         navigator.serviceWorker.register ('sw.js')
         .then (reg => {
             console.log ('registrado!')
-            console.log (reg)
+            // console.log (reg)
+            register = reg
         })
         .catch (err => {
             console.log ('falha ao registrar')
             console.log (err)
         })
-
-        navigator.serviceWorker.ready
-        .then( registration => {
-            registration.pushManager.getSubscription()
-            // registration.pushManager.subscribe({
-            //     userVisibleOnly: true //Set user to see every notification
-            // })
-            // .then(function (subscription) {
-            //     toast('Subscribed successfully.');
-            //     console.info('Push notification subscribed.');
-            //     console.log(subscription);
-            // })
-            // .catch(function (error) {
-            //     console.error('Push notification subscription error: ', error);
-            // })
-
-        })
-        .catch (function (error) {
-            console.error('Error occurred while enabling push ', error);
-        });
     })
 }
 
+
+function showNotification () {
+    Notification.requestPermission ( status=> {
+        if (status === 'granted') {
+            register.showNotification('teste')
+        }
+    })
+}
 // const notificationButton = document.getElementById("enableNotifications");
 // let swRegistration = null;
 
