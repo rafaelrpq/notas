@@ -17,7 +17,9 @@ function atualizar (id, nota) {
 
 function lerDados () {
     let dados = {};
-    for (let i = 0; i < localStorage.length; i++) {
+    let registros = localStorage.length;
+    if (registros === 0) return null;
+    for (let i = 0; i < registros; i++) {
         let obj = JSON.parse (localStorage.getItem (localStorage.key(i)))
         dados[localStorage.key(i)] = new Nota ({
             desc : obj.desc,
@@ -25,7 +27,7 @@ function lerDados () {
             checked : obj.checked
         })
     }
-    return  (Object.keys(dados).length > 0) ? dados : null;
+    return dados;
 }
 
 
@@ -39,7 +41,6 @@ function exibirDados () {
     }
 
     let notas = lerDados ();
-    Object.keys (notas).sort()
     let tbody = document.createElement ('tbody');
 
     if (notas === null) {
